@@ -1,7 +1,16 @@
 package dataflow
 
-type Watermark interface {
+type Condition struct {
 }
 
-type PercentileWatermark struct {
+func AtWatermark() *Condition {
+	return nil
+}
+
+func AtPeriod() *Condition {
+	return nil
+}
+
+func AtPercentileWatermark() *Condition {
+	return nil
 }

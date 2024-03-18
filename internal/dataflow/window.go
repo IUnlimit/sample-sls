@@ -5,21 +5,16 @@ import "time"
 // Window
 // Windowing determines where in event time data are grouped together for processing
 type Window interface {
-	DoSth()
 }
 
-type Sessions struct {
-	// todo
-	// current time
-	duration time.Duration
+type FixedWindow struct {
+	p *Pipeline
+	d time.Duration
 }
 
-func WithGapDuration(d time.Duration) *Sessions {
-	return &Sessions{
-		duration: d,
+func NewFixedWindow(pipeline *Pipeline, duration time.Duration) *FixedWindow {
+	return &FixedWindow{
+		p: pipeline,
+		d: duration,
 	}
-}
-
-func (s *Sessions) DoSth() {
-
 }
