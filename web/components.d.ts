@@ -7,7 +7,15 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    LayBody: typeof import('@layui/layui-vue')['LayBody']
+    LayFooter: typeof import('@layui/layui-vue')['LayFooter']
+    LayHeader: typeof import('@layui/layui-vue')['LayHeader']
+    LayLayout: typeof import('@layui/layui-vue')['LayLayout']
+    LayMenu: typeof import('@layui/layui-vue')['LayMenu']
+    LayMenuItem: typeof import('@layui/layui-vue')['LayMenuItem']
+    LaySide: typeof import('@layui/layui-vue')['LaySide']
+    LaySubMenu: typeof import('@layui/layui-vue')['LaySubMenu']
     LaySwitch: typeof import('@layui/layui-vue')['LaySwitch']
+    Side: typeof import('./src/components/Side.vue')['default']
   }
 }
