@@ -4,6 +4,8 @@ Sample-sls (Sample simple log service) is a streaming log analysis project that 
 
 ## Check Points
 
+- [ ] Swagger for RESTFul API
+- [x] Generate Log IDs Using **Snowflake** Algorithm
 - [ ] Google Dataflow
 - [ ] Data Dashboard
 
