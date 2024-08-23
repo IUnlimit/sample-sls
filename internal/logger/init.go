@@ -2,6 +2,7 @@ package logger
 
 import (
 	global "github.com/IUnlimit/sample-sls/internal"
+	"github.com/IUnlimit/sample-sls/internal/conf"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	log "github.com/sirupsen/logrus"
 	"path"
@@ -10,12 +11,8 @@ import (
 
 const Prefix = "SLS"
 
-func Init() {
-	initLog()
-}
-
-func initLog() {
-	config := global.Config
+func init() {
+	config := conf.Config
 	rotateOptions := []rotatelogs.Option{
 		rotatelogs.WithRotationTime(time.Hour * 24),
 	}

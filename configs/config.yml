@@ -10,13 +10,44 @@ log:
   # 是否开启控制台颜色
   colorful: true
 
-# API 配置
-api:
-  # 监听地址
-  host: "0.0.0.0"
-  # 绑定端口
-  port: 8080
+# 标记连续日志的最大时间窗口间隔，用于确定无头日志是否为连续日志。
+interval: "20ms"
 
-# Elasticsearch 配置
-es:
-  url: "http://192.168.3.7:9200"
+app:
+#    # 配置转换器类型
+#  - converter:
+#      type: Json
+#      # 指定 converter 读取的文件位置
+#      location: ''
+#    formater:
+#      type:
+#    publisher:
+#      type:
+    # 开启管道模式时, 无需配置 publisher
+  - pipeline: true
+    converter:
+      type: "Regex"
+      regex:
+        pattern: |
+          (?x) # Enable PCRE2 extended mode
+          ^
+          (?<remote_addr>[^ ]+) \s - \s
+          (?<remote_user>[^ ]+) \s
+          \[
+            (?<time_local>[^\]]+)
+          \]
+          \s+ "
+          (?<request>
+            (?<request_method>[A-Z]+) \s+
+            (?<request_uri>[^ ]+) \s+
+            (?<server_protocol>[^"]+)
+          )
+          " \s+
+          (?<status>\d+) \s+
+          (?<body_bytes_sent>\d+) \s+
+          "(?<http_referer>[^"]*)" \s+
+          "(?<http_user_agent>[^"]*)"
+    formater:
+      type: "Journal"
+      journal:
+        prefix: "NGINX_"

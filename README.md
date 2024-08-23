@@ -6,10 +6,22 @@ Sample-sls (Sample simple log service) is a streaming log analysis project that 
 
 - [ ] Swagger for RESTFul API
 - [x] Generate Log IDs Using **Snowflake** Algorithm
-- [ ] Google Dataflow
 - [ ] Data Dashboard
 
-## Links
+## Flow
 
-- [The Dataflow Model: A Practical Approach to Balancing Correctness, Latency, and Cost in Massive-Scale, Unbounded, Out-of-Order Data Processing](https://research.google.com/pubs/archive/43864.pdf)
-- [《THE DATAFLOW MODEL》论文中文翻译](http://illtamer.com/2024/03/16/dataflow-model-paper-chinese)
+> LogStream -> `converter` -> `metadata` -> `formater` -> `publisher`
+
+TestInput
+
+```shell
+printf "MESSAGE=hello world\nPRIORITY=6\n\n" | systemd-cat
+```
+
+Usage
+
+```shell
+tail -F /var/log/nginx/*.log       |\  # outputs log lines
+  ssls -c ./config.yml             |\  # outputs Journal Export Format
+  systemd-cat                          # send to local/remote journald
+```

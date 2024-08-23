@@ -16,7 +16,7 @@ func LoadConfig(fileName string, fileFolder string, kind string, fs embed.FS, co
 	filePath := fileFolder + fileName
 	exists := tool.FileExists(filePath)
 	if !exists {
-		log.Warnf("Can't find `%s`, generating default configuration", fileName)
+		log.Debugf("Can't find `%s`, generating default configuration", fileName)
 		data, err := fs.ReadFile(fileName)
 		if err != nil {
 			return false, err

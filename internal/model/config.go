@@ -3,9 +3,9 @@ package model
 import "time"
 
 type Config struct {
-	Log *Log           `yaml:"log"`
-	API *API           `yaml:"api"`
-	ES  *Elasticsearch `yaml:"es"`
+	Log      *Log          `yaml:"log"`
+	Interval time.Duration `yaml:"interval"`
+	App      []*App        `yaml:"app"`
 }
 
 type Log struct {
@@ -15,11 +15,35 @@ type Log struct {
 	Colorful bool          `yaml:"colorful,omitempty"`
 }
 
-type API struct {
-	Host string `yaml:"host,omitempty"`
-	Port int64  `yaml:"port,omitempty"`
+type App struct {
+	Converter *Converter `yaml:"converter"`
+	Formater  *Formater  `yaml:"formater"`
+	Publisher *Publisher `yaml:"publisher,omitempty"` // pipeline=true时, 无需配置 publisher
+	Pipeline  bool       `yaml:"pipeline,omitempty"`
 }
 
-type Elasticsearch struct {
-	Url string `yaml:"url,omitempty"`
+// Converter 转换器配置
+type Converter struct {
+	Type     string `yaml:"type"`
+	Location string `yaml:"location,omitempty"` // 仅 pipeline=false 使用
+	Regex    *Regex `yaml:"regex,omitempty"`
+}
+
+// Regex Converter 转换器子配置
+type Regex struct {
+	Pattern string `yaml:"pattern,omitempty"`
+}
+
+// Formater 格式化配置
+type Formater struct {
+	Type    string   `yaml:"type"`
+	Journal *Journal `yaml:"journal,omitempty"`
+}
+
+type Journal struct {
+	Prefix string `yaml:"prefix,omitempty"`
+}
+
+type Publisher struct {
+	Type string `yaml:"type"`
 }
